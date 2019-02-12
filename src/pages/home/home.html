@@ -1,14 +1,35 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="secondary">
     <ion-title>
-      Ionic Blank
+      My Notes
     </ion-title>
+    <ion-buttons end>
+    	<button ion-button (click)="toggleOrder()" *ngIf="!EnableOrder">edit</button>
+    	<button ion-button (click)="toggleOrder()" *ngIf="EnableOrder">done</button>
+    	<button ion-button (click)="addtech()" >
+    		<ion-icon class="add" name="add-circle"></ion-icon>
+    	</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+ <ion-list [reorder]="EnableOrder" (ionItemReorder)="reorderItems($event)">
+ 	<ion-item-sliding *ngFor=" let item of technologies; let TechIndex = index ">
+ 		<ion-item>{{item}}</ion-item>
+ 		<ion-item-options side="right">
+ 			<button ion-button color="danger" (click)="removeTech(TechIndex)"><ion-icon name="trash"></ion-icon></button>
+ 		</ion-item-options>
+
+    <ion-item-options side="left">
+      <button ion-button color="primary" (click)="editTech(TechIndex)"><ion-icon name="create"></ion-icon></button>
+    </ion-item-options>
+
+ 	</ion-item-sliding>
+ </ion-list>
+ <ion-fab right bottom >
+    <button ion-fab (click)="archivePage()" color="secondary">
+        <ion-icon name="archive"></ion-icon>
+    </button>
+ </ion-fab>
 </ion-content>
